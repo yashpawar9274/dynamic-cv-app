@@ -10,6 +10,7 @@ const NAV = [
   { id: "about", label: "About" },
   { id: "experience", label: "Experience" },
   { id: "skills", label: "Skills" },
+  { id: "ai", label: "AI" },
   { id: "contact", label: "Contact" },
 ];
 
@@ -74,8 +75,9 @@ function Hero() {
           <div className="md:col-span-4 label">[ Discipline ]</div>
           <div className="md:col-span-8">
             <p className="text-2xl md:text-4xl font-serif leading-tight">
-              Data analyst & full-stack builder shaping raw application logs into
-              <em> decisions worth making.</em>
+              Data Analyst extracting insight from real-world data — with the
+              <em> engineering instinct</em> to build the web tools and
+              <em> AI workflows</em> that put those insights to work.
             </p>
           </div>
         </div>
@@ -83,9 +85,27 @@ function Hero() {
         <div className="mt-8 grid md:grid-cols-12 gap-8 border-t hairline pt-8">
           <div className="md:col-span-4 label">[ Currently ]</div>
           <div className="md:col-span-8 text-base md:text-lg max-w-2xl text-muted-foreground">
-            B.Sc. Computer Science at Mumbai University · Freelance data work since 2022 · Open to
-            entry-level Data Analyst roles where instinct meets evidence.
+            B.Sc. Computer Science, Mumbai University · 2.5+ years freelancing on
+            real product data · Open to entry-level Data Analyst roles.
           </div>
+        </div>
+
+        <div className="mt-10 flex flex-wrap gap-4">
+          <a
+            href="#work"
+            className="group inline-flex items-center gap-3 bg-ink text-paper px-6 py-3 label hover:bg-ink/85 transition-colors"
+          >
+            View Projects
+            <span className="transition-transform group-hover:translate-x-1">→</span>
+          </a>
+          <a
+            href="/resume.pdf"
+            download
+            className="group inline-flex items-center gap-3 border border-ink px-6 py-3 label hover:bg-ink hover:text-paper transition-colors"
+          >
+            Download Résumé
+            <span className="transition-transform group-hover:translate-y-0.5">↓</span>
+          </a>
         </div>
       </div>
     </section>
@@ -93,7 +113,7 @@ function Hero() {
 }
 
 function Marquee() {
-  const items = ["Pattern recognition", "SQL", "Excel forensics", "Dashboards", "Anomaly hunting", "React", "Supabase", "Storytelling with data"];
+  const items = ["Data analysis", "Pattern recognition", "Excel forensics", "SQL", "Dashboards", "Anomaly hunting", "React", "Node", "AI-assisted workflows"];
   return (
     <div className="border-y hairline overflow-hidden py-6">
       <div className="flex gap-12 whitespace-nowrap animate-[marquee_40s_linear_infinite]">
@@ -111,26 +131,32 @@ const PROJECTS = [
   {
     n: "01",
     title: "Fraud Guard",
-    role: "Detection systems",
+    role: "Behavioural analytics",
     stack: "React · Node · Supabase",
-    blurb:
-      "A monitoring layer that watches transactional behaviour for the kind of patterns humans miss until it's too late. Built to flag, not to scold.",
+    problem: "Small platforms can't afford enterprise fraud tools, but still bleed from the same patterns.",
+    data: "Synthetic + sampled transaction logs: amount, frequency, device fingerprint, session timing.",
+    analysis: "Profiled normal user rhythms, then flagged statistical outliers — velocity spikes, off-hours bursts, mismatched geos.",
+    outcome: "A lightweight monitoring layer that surfaces suspicious sessions for review instead of blocking blindly.",
   },
   {
     n: "02",
     title: "Fuel Tracker",
     role: "Consumption analytics",
     stack: "HTML · CSS · JavaScript",
-    blurb:
-      "Distance, mileage, cost — folded into a single readable narrative. A small tool that taught me how much story a single column of numbers can carry.",
+    problem: "People underestimate vehicle running cost because no one ties distance, mileage and price together.",
+    data: "User-logged refuels: odometer, litres, price-per-litre, date.",
+    analysis: "Computed rolling mileage, cost-per-km trends, and seasonal drift in efficiency.",
+    outcome: "A single readable narrative from a column of numbers — taught me how much story one dataset can carry.",
   },
   {
     n: "03",
     title: "LifeXS",
     role: "Behavioural data",
     stack: "JavaScript · Supabase",
-    blurb:
-      "Gamified productivity tracker. The point wasn't tasks — it was the data trail behind them, and what completion patterns reveal about focus.",
+    problem: "Productivity apps measure tasks; they don't measure the person.",
+    data: "Task completion events: timestamp, category, duration, streak state.",
+    analysis: "Studied completion patterns by hour and category to surface real focus windows vs. wishful scheduling.",
+    outcome: "Gamified tracker where the data trail — not the to-do list — is the actual product.",
   },
 ];
 
@@ -146,28 +172,37 @@ function Work() {
           <span className="label hidden md:block">2022 → 2026</span>
         </div>
 
-        <ul>
+        <ul className="space-y-0">
           {PROJECTS.map((p) => (
-            <li key={p.n} className="group border-b hairline">
-              <a href="#contact" className="grid md:grid-cols-12 gap-6 py-10 md:py-14 items-baseline transition-colors hover:bg-ink hover:text-paper px-2 -mx-2">
+            <li key={p.n} className="group border-b hairline transition-colors hover:bg-ink hover:text-paper">
+              <div className="grid md:grid-cols-12 gap-6 py-10 md:py-14 px-2 -mx-2">
                 <div className="md:col-span-1 label opacity-60">{p.n}</div>
                 <div className="md:col-span-4">
-                  <h3 className="font-serif text-4xl md:text-6xl leading-none">
-                    {p.title}
-                  </h3>
+                  <h3 className="font-serif text-4xl md:text-6xl leading-none">{p.title}</h3>
+                  <div className="label mt-3 opacity-70">{p.role}</div>
+                  <div className="label mt-1 opacity-50">{p.stack}</div>
                 </div>
-                <div className="md:col-span-2 label opacity-70">{p.role}</div>
-                <div className="md:col-span-4 text-sm md:text-base leading-relaxed max-w-md">
-                  {p.blurb}
+                <div className="md:col-span-7 grid sm:grid-cols-2 gap-x-8 gap-y-5 text-sm md:text-[15px] leading-relaxed">
+                  <Field k="Problem" v={p.problem} />
+                  <Field k="Data" v={p.data} />
+                  <Field k="Analysis" v={p.analysis} />
+                  <Field k="Outcome" v={p.outcome} />
                 </div>
-                <div className="md:col-span-1 text-right label opacity-60 group-hover:opacity-100">→</div>
-              </a>
-              <div className="px-2 pb-4 label opacity-50">{p.stack}</div>
+              </div>
             </li>
           ))}
         </ul>
       </div>
     </section>
+  );
+}
+
+function Field({ k, v }: { k: string; v: string }) {
+  return (
+    <div>
+      <div className="label opacity-60 mb-1">{k}</div>
+      <div>{v}</div>
+    </div>
   );
 }
 
@@ -179,15 +214,21 @@ function About() {
         <div className="grid md:grid-cols-12 gap-10">
           <div className="md:col-span-7">
             <p className="font-serif text-3xl md:text-5xl leading-tight">
-              I read data the way some people read rooms — looking for the
-              <em> tell.</em> The outlier, the rhythm, the thing nobody named yet.
+              I work as a data analyst first — the rest of my stack exists so the
+              <em> insight actually reaches someone.</em>
             </p>
             <p className="mt-10 text-base md:text-lg max-w-xl opacity-80 leading-relaxed">
-              I'm a final-year Computer Science student in Mumbai who's spent the last
-              three years quietly freelancing on real product data — user activity,
-              transaction-like records, system logs. Less theory, more pattern. I build
-              the apps too, which means I understand what the numbers are actually
-              describing.
+              For two and a half years I've been quietly digging through real product
+              data — user activity, transaction-like records, system logs — looking for
+              the pattern, the outlier, the thing nobody named yet. Because I also
+              build the apps these numbers come from, I understand what each column
+              is actually describing, not just what its header says.
+            </p>
+            <p className="mt-6 text-base md:text-lg max-w-xl opacity-80 leading-relaxed">
+              Web development and AI tooling are my supporting trades — they let me
+              go from observation to a working dashboard, prototype, or automation in
+              the same week. Confident with what I've shipped. Honest about what
+              I'm still learning.
             </p>
           </div>
           <div className="md:col-span-5 md:border-l hairline md:pl-10 space-y-8">
@@ -212,9 +253,27 @@ function Stat({ k, v }: { k: string; v: string }) {
 }
 
 const EXP = [
-  { y: "Jun 2022 — Jan 2025", role: "Data Analyst", co: "Freelance", loc: "Remote", note: "Analysed user activity, transaction-like records and system logs across multiple web apps. Surfaced usage patterns and anomalies; built dashboard-style summaries that fed product decisions." },
-  { y: "Jan 2022 — Dec 2022", role: "Team Lead", co: "Valmo", loc: "Boisar", note: "Operations leadership — coordination, throughput tracking, daily reporting." },
-  { y: "Mar 2021 — Oct 2021", role: "Asst. Team Lead", co: "Ekart", loc: "Boisar", note: "Logistics floor work; first taste of operational metrics that mattered." },
+  {
+    y: "Jun 2022 — Jan 2025",
+    role: "Data Analyst",
+    co: "Freelance",
+    loc: "Remote",
+    note: "Worked across multiple web apps cleaning and interrogating user activity, transaction-like records and system logs. Surfaced usage patterns and anomalies; turned them into dashboard-style summaries that fed product decisions and roadmap calls.",
+  },
+  {
+    y: "Jan 2022 — Dec 2022",
+    role: "Team Lead",
+    co: "Valmo",
+    loc: "Boisar",
+    note: "Owned daily throughput tracking and reporting. First place I learned that operational data is only useful when it's read the same way by everyone in the room.",
+  },
+  {
+    y: "Mar 2021 — Oct 2021",
+    role: "Asst. Team Lead",
+    co: "Ekart",
+    loc: "Boisar",
+    note: "Logistics floor. Tracked SLA breaches, sortation accuracy and load timing — first taste of metrics that change behaviour the moment you publish them.",
+  },
 ];
 
 const EDU = [
@@ -277,22 +336,86 @@ function Experience() {
   );
 }
 
-const SKILLS = ["HTML", "CSS", "JavaScript", "React", "Next.js", "Node.js", "Express", "MongoDB", "Supabase", "Firebase", "Git", "Excel", "SQL (basic)", "Dashboards"];
+const SKILL_GROUPS: { title: string; tag: string; items: string[] }[] = [
+  {
+    title: "Data Analysis",
+    tag: "Primary",
+    items: ["Excel (pivot, lookup, modelling)", "SQL (queries, joins, aggregations)", "Dashboarding", "Pattern & anomaly recognition", "Data cleaning"],
+  },
+  {
+    title: "Web Development",
+    tag: "Builder",
+    items: ["JavaScript", "React", "Next.js", "Node.js", "Express", "MongoDB", "Supabase", "Firebase", "HTML / CSS", "Git"],
+  },
+  {
+    title: "AI & Tooling",
+    tag: "Leverage",
+    items: ["AI-assisted analysis & coding", "Prompt design for data tasks", "Learning ML fundamentals"],
+  },
+];
 
 function Skills() {
   return (
     <section id="skills" className="py-24 md:py-32 border-t hairline">
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
         <div className="label mb-10">§ 04 — Toolkit</div>
-        <h2 className="font-serif text-5xl md:text-7xl mb-12">The instruments.</h2>
-        <ul className="flex flex-wrap gap-x-2 gap-y-4">
-          {SKILLS.map((s, i) => (
-            <li key={s} className="font-serif text-3xl md:text-5xl">
-              {s}
-              {i < SKILLS.length - 1 && <span className="mx-3 opacity-30">·</span>}
-            </li>
+        <h2 className="font-serif text-5xl md:text-7xl mb-16">The instruments.</h2>
+        <div className="grid md:grid-cols-3 gap-10 md:gap-14">
+          {SKILL_GROUPS.map((g) => (
+            <div key={g.title} className="border-t hairline pt-6">
+              <div className="flex items-baseline justify-between mb-6">
+                <h3 className="font-serif text-3xl md:text-4xl">{g.title}</h3>
+                <span className="label opacity-50">{g.tag}</span>
+              </div>
+              <ul className="space-y-2">
+                {g.items.map((s) => (
+                  <li key={s} className="text-base md:text-lg leading-snug">— {s}</li>
+                ))}
+              </ul>
+            </div>
           ))}
-        </ul>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const AI_USES = [
+  {
+    n: "01",
+    t: "Faster exploration",
+    d: "I use AI to draft SQL, regex and pivot logic on messy datasets, then verify by hand. Cuts the boring middle of any analysis in half.",
+  },
+  {
+    n: "02",
+    t: "Pattern second-opinion",
+    d: "When an anomaly looks suspicious, I describe the shape of the data to a model and stress-test my interpretation against alternative explanations.",
+  },
+  {
+    n: "03",
+    t: "Build leverage",
+    d: "AI-assisted coding lets me ship a small dashboard, scraper or admin tool in hours — so the analysis actually reaches a screen, not just a notebook.",
+  },
+];
+
+function AISection() {
+  return (
+    <section id="ai" className="py-24 md:py-32 bg-ink text-paper">
+      <div className="mx-auto max-w-[1400px] px-6 md:px-10">
+        <div className="label mb-10 opacity-60">§ 05 — How I Use AI</div>
+        <h2 className="font-serif text-5xl md:text-7xl mb-12 max-w-4xl leading-[0.95]">
+          A multiplier on the analyst,<br />
+          <em>not a replacement for one.</em>
+        </h2>
+        <div className="grid md:grid-cols-3 gap-10">
+          {AI_USES.map((u) => (
+            <div key={u.n} className="border-t border-paper/20 pt-6">
+              <div className="label opacity-60 mb-4">{u.n}</div>
+              <h3 className="font-serif text-3xl mb-3">{u.t}</h3>
+              <p className="text-sm md:text-base opacity-80 leading-relaxed">{u.d}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -300,13 +423,13 @@ function Skills() {
 
 function Contact() {
   return (
-    <section id="contact" className="bg-ink text-paper py-24 md:py-32">
+    <section id="contact" className="bg-paper text-ink py-24 md:py-32 border-t hairline">
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
-        <div className="label mb-10 opacity-60">§ 05 — Get in touch</div>
+        <div className="label mb-10 opacity-60">§ 06 — Get in touch</div>
         <h2 className="font-serif text-6xl md:text-9xl leading-none">
           Let's build something<br /><em>worth measuring.</em>
         </h2>
-        <div className="mt-16 grid md:grid-cols-3 gap-10 border-t border-paper/20 pt-10">
+        <div className="mt-16 grid md:grid-cols-3 gap-10 border-t hairline pt-10">
           <a href="mailto:theyashpawar92@gmail.com" className="group">
             <div className="label opacity-60 mb-2">Email</div>
             <div className="font-serif text-2xl md:text-3xl group-hover:italic transition-all">theyashpawar92@gmail.com</div>
@@ -324,7 +447,7 @@ function Contact() {
         <footer className="mt-24 flex flex-col md:flex-row md:items-end justify-between gap-6 label opacity-60">
           <span>© 2026 Yash Pawar — All rights reserved.</span>
           <span>Set in Instrument Serif & Work Sans.</span>
-          <span>v1.0 — handcrafted, not generated.</span>
+          <span>v1.1 — handcrafted, not generated.</span>
         </footer>
       </div>
     </section>
@@ -341,6 +464,7 @@ function Index() {
       <About />
       <Experience />
       <Skills />
+      <AISection />
       <Contact />
     </main>
   );
