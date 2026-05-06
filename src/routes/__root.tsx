@@ -36,6 +36,10 @@ export const Route = createRootRoute({
       { property: "og:description", content: "Portfolio of Yash Pawar — entry-level Data Analyst turning application data into clear, decisive insight." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Yash Pawar — Data Analyst & Builder" },
+      { name: "twitter:description", content: "Portfolio of Yash Pawar — entry-level Data Analyst turning application data into clear, decisive insight." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/683a9cdd-da5d-46ea-bcf3-86a153f26bbd" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/683a9cdd-da5d-46ea-bcf3-86a153f26bbd" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
