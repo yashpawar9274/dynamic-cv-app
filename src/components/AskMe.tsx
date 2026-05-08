@@ -12,6 +12,7 @@ const SUGGESTIONS = [
 ];
 
 export function AskMe() {
+  const [mounted, setMounted] = useState(false);
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -25,9 +26,13 @@ export function AskMe() {
   const ask = useServerFn(askMe);
   const scrollRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => setMounted(true), []);
+
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [messages, open]);
+
+  if (!mounted) return null;
 
   async function send(text: string) {
     const trimmed = text.trim();

@@ -60,6 +60,25 @@ export const askMe = createServerFn({ method: "POST" })
       return { reply: "", error: "AI is not configured on the server." };
     }
 
+    // Load admin-managed FAQ overrides (highest authority)
+    let overridesBlock = "";
+    try {
+      const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+      const { data: faqs } = await supabaseAdmin
+        .from("faq_overrides")
+        .select("question,answer,priority")
+        .eq("enabled", true)
+        .order("priority", { ascending: false })
+        .limit(50);
+      if (faqs && faqs.length) {
+        overridesBlock =
+          "\n\n# Admin Overrides (HIGHEST PRIORITY — use these answers verbatim when relevant)\n" +
+          faqs.map((f, i) => `${i + 1}. Q: ${f.question}\n   A: ${f.answer}`).join("\n");
+      }
+    } catch (e) {
+      console.error("faq_overrides load failed:", e);
+    }
+
     try {
       const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
         method: "POST",
@@ -70,7 +89,7 @@ export const askMe = createServerFn({ method: "POST" })
         body: JSON.stringify({
           model: "google/gemini-3-flash-preview",
           messages: [
-            { role: "system", content: PORTFOLIO_CONTEXT },
+            { role: "system", content: PORTFOLIO_CONTEXT + overridesBlock },
             ...data.messages,
           ],
         }),
