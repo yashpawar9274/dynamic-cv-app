@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { AskMe } from "@/components/AskMe";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -466,6 +467,7 @@ function Index() {
       <Skills />
       <AISection />
       <Contact />
+      <AskMe />
     </main>
   );
 }
