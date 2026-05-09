@@ -2,6 +2,9 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
+import { attachSupabaseAuth } from "./auth-client-middleware";
+
+const auth = [attachSupabaseAuth, requireSupabaseAuth] as const;
 
 const FaqInput = z.object({
   question: z.string().trim().min(2).max(500),
