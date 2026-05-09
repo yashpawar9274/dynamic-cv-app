@@ -26,7 +26,7 @@ async function assertAdmin(userId: string) {
 
 // Promote the calling user to admin IF no admin exists yet (first-run bootstrap)
 export const bootstrapAdmin = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
+  .middleware(auth)
   .handler(async ({ context }) => {
     const { count } = await supabaseAdmin
       .from("user_roles")
@@ -41,7 +41,7 @@ export const bootstrapAdmin = createServerFn({ method: "POST" })
   });
 
 export const checkIsAdmin = createServerFn({ method: "GET" })
-  .middleware([requireSupabaseAuth])
+  .middleware(auth)
   .handler(async ({ context }) => {
     const { data } = await supabaseAdmin
       .from("user_roles")
@@ -53,7 +53,7 @@ export const checkIsAdmin = createServerFn({ method: "GET" })
   });
 
 export const listFaqs = createServerFn({ method: "GET" })
-  .middleware([requireSupabaseAuth])
+  .middleware(auth)
   .handler(async ({ context }) => {
     await assertAdmin(context.userId);
     const { data, error } = await supabaseAdmin
@@ -66,7 +66,7 @@ export const listFaqs = createServerFn({ method: "GET" })
   });
 
 export const upsertFaq = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
+  .middleware(auth)
   .inputValidator((input: unknown) =>
     z.object({ id: z.string().uuid().optional(), ...FaqInput.shape }).parse(input),
   )
@@ -96,7 +96,7 @@ export const upsertFaq = createServerFn({ method: "POST" })
   });
 
 export const deleteFaq = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
+  .middleware(auth)
   .inputValidator((input: unknown) => z.object({ id: z.string().uuid() }).parse(input))
   .handler(async ({ context, data }) => {
     await assertAdmin(context.userId);
